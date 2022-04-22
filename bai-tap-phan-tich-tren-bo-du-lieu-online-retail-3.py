@@ -1,0 +1,12 @@
+import pandas as pd
+data=pd.read_csv('OnlineRetail.csv', encoding = "ISO-8859-1")
+data.head()
+print (data.info())
+data_Invoice = data.pivot_table(values = 'Quantity',columns = 'Country',index='InvoiceNo',aggfunc ='mean')
+print(data_Invoice)
+data_Customer = data.pivot_table(values = 'Quantity',columns = 'StockCode',index='CustomerID',aggfunc ={min,max})
+print(data_Customer)
+data_StockCode = data.pivot_table(values = 'Quantity',index='StockCode',aggfunc = 'sum')
+data_StockCode1 = data.pivot_table(values = 'UnitPrice',index='StockCode',aggfunc = 'mean')
+data_StockCode2 = pd.merge(data_StockCode,data_StockCode1, on = 'StockCode')
+print(data_StockCode2)
